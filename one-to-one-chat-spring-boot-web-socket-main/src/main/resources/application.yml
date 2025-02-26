@@ -1,0 +1,25 @@
+server:
+  address: 0.0.0.0  # Allows external connections
+  port: 8080        # Backend runs on port 8080
+
+spring:
+  application:
+    name: chat-service  # Define proper service name
+  
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/chatapp
+
+  cloud:
+    consul:
+      host: 172.31.2.2  # Your Consul host (consider using localhost for local development)
+      port: 8500
+      discovery:
+        enabled: true
+        register: true
+        prefer-ip-address: true
+        service-name: ${spring.application.name}
+        instance-id: ${spring.application.name}-${random.uuid}
+  
+  config:
+    import: "consul:"  # Required for Consul integration
